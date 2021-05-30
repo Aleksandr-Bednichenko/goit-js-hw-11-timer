@@ -14,20 +14,19 @@ class CountdownTimer {
   }
 
   init() {
-      const timeParts = this.getTimeParts(0);
+      const time = this.targetDate - Date.now();
+      if (time <= 0) {
+          clearInterval(this.intervalId);
+          return;
+      }
+
+      const timeParts = this.getTimeParts(time);
       this.renderRefs(timeParts);
   }
 
   start() {
       this.intervalId = setInterval(() => {
-          const time = this.targetDate - Date.now();
-          if (time <= 0) {
-              clearInterval(this.intervalId);
-              return;
-          }
-
-          const timeParts = this.getTimeParts(time);
-          this.renderRefs(timeParts);
+       this.init()
       }, 1000)
   }
 
